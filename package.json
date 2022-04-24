@@ -29,6 +29,7 @@
   "homepage": "https://github.com/ChaimaBouhlel/ExerciceSymfony-#readme",
   "description": "",
   "dependencies": {
-    "bootstrap": "^5.1.3"
+    "bootstrap": "^5.1.3",
+    "yarn": "^1.22.18"
   }
 }

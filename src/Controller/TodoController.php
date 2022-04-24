@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route("/todo")]
+
 class TodoController extends AbstractController
 {
-    #[Route('/todo', name: 'app_todo')]
+    #[Route('/', name: 'app_todo')]
     public function index(Request $request): Response
     {
         $session = $request->getSession();
@@ -26,8 +29,10 @@ class TodoController extends AbstractController
         return $this->render('todo/index.html.twig');
     }
 
-    #[Route('/todo/add/{name}/{content}', name: 'todo.add')]
-    public function addTodo(Request $request, $name, $content)
+    #[Route('/add/{name?test}/{content?test}',
+        name: 'todo.add',
+    )]
+    public function addTodo(Request $request, $name, $content):RedirectResponse
     {
         $session = $request->getSession();
         //check the existence of the table "todo"
@@ -46,8 +51,8 @@ class TodoController extends AbstractController
         return $this->redirectToRoute('app_todo');
     }
 
-    #[Route('/todo/delete/{name}', name: 'todo.delete')]
-    public function deleteTodo(Request $request, $name)
+    #[Route('/delete/{name}', name: 'todo.delete')]
+    public function deleteTodo(Request $request, $name):RedirectResponse
     {
         $session = $request->getSession();
         //check the existence of the table "todo"
@@ -66,9 +71,8 @@ class TodoController extends AbstractController
         return $this->redirectToRoute('app_todo');
     }
 
-
-    #[Route('/todo/update/{name}/{content}', name: 'todo.update')]
-    public function updateTodo(Request $request, $name, $content)
+    #[Route('/update/{name}/{content}', name: 'todo.update')]
+    public function updateTodo(Request $request, $name, $content):RedirectResponse
     {
         $session = $request->getSession();
         //check the existence of the table "todo"
@@ -87,13 +91,12 @@ class TodoController extends AbstractController
         return $this->redirectToRoute('app_todo');
     }
 
-    #[Route('/todo/reset', name: 'todo.reset')]
+    #[Route('/reset', name: 'todo.reset')]
     public function reset(Request $request): Response
     {
         $session = $request->getSession();
         $session->remove('todo');
         return $this->redirectToRoute('app_todo');
     }
-
 
 }
